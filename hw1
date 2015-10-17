@@ -1,0 +1,19 @@
+
+1. -retrieve course list
+-get student # section # grade
+-get student #
+-list Instructor
+
+2. -change student class #
+-add student # to section #
+-change student # grade
+
+3. -One type of integrity constraint is the type of grade a student can recieve. For example a student can only receive an: A, B, C, D, or F. There are no T or E grades.
+-Another integrity constraint is the year value for classes. You cannot be take a class in a year that has not happened yet.
+-Lastly each course can only refer to the same ID number. Multiple classes cannot share the same number.
+
+4. a) The student's major column, the course department column, the prefixes in the section's course_number's column, and the
+prefixes in the prerequisite_number column.
+
+4. b) You could combine the information into one table. Add the prerequisite next to the course number and section information after the department.
+
