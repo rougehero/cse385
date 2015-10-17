@@ -1,0 +1,36 @@
+
+/* 1. Find students (sid and name) that took the course 'CS201' in Fall 2008. */
+SELECT name, sid FROM Student NATURAL JOIN Took NATURAL JOIN Section NATURAL JOIN Course WHERE semester = 'F2008' AND crsid = 'CS201';
+
+/* 2. Find students (sid and name) that did not take 'Calculus'. */
+SELECT Student.name, Student.sid FROM Student NATURAL JOIN Took NATURAL JOIN Section NATURAL JOIN Course WHERE cname = 'Calculus' GROUP BY Student.sid;
+
+/* 3. For each course, find the highest score. Print the crsid and highest 
+      score. */
+SELECT crsid, MAX(score) FROM Took NATURAL JOIN Section GROUP BY crsid;
+
+/* 4. Find students (sid, name) that have taken exactly one course in the CompSci 
+      department. */
+SELECT sid, name FROM ((Student NATURAL JOIN Took) NATURAL JOIN Section) NATURAL JOIN Course WHERE dept = 'CompSci'  GROUP BY sid HAVING COUNT(sid) = 1;
+
+/* 5. Create a view V1 that displays the average grades of domestic students that
+      are athletes. Print sid, name, and average grade. */
+CREATE VIEW V1 AS SELECT Student.name, Student.sid, AVG(score) as 'Average_Score' FROM Student NATURAL JOIN Took NATURAL JOIN Athlete WHERE Student.isInternational = 0 GROUP BY sid;
+SELECT * FROM V1;
+
+/* 6. Create a view V2 that displays the average grade for each section, ordered 
+      by the course id (crsid) of that section. Print secid, crsid, and average 
+      grade. */
+CREATE VIEW V2 AS SELECT secid, crsid, AVG(score) as 'Average_Grade' FROM Section NATURAL JOIN Took GROUP BY secid ORDER BY crsid;
+SELECT * FROM V2;
+
+/* 7. Create a trigger T that takes care of cases when a score not ranging 
+      between 0 and 100 (inclusive) is inserted into the TOOK table. Write a 
+      comment to explain what your trigger does when such an invalid value is 
+      entered. */
+CREATE TRIGGER insertScore 
+	INSERT ON Took 
+	BEGIN
+		DELETE FROM Took 	#Deletes the score from took when it is out of range.
+		WHERE score<0 OR score>100;
+END;
