@@ -1,0 +1,41 @@
+
+/* 1. Find the movies (MId, Title, ReleaseDate) directed by Don Argott. */
+SELECT MId, Title, ReleaseDate FROM Movie JOIN Director ON MId = DId WHERE Name = 'Don Argott';
+
+/* 2. Find the directors (DId, Name) that have released a movie with the word 'the' in the 
+      title. Print the Title of the movie as well. */
+SELECT DId, Name, Title FROM Movie JOIN Director ON MId = DId WHERE Title LIKE '%the%';
+
+/* 3. Find the directors (DId, Name) that released a movie on their birthday. Print the 
+      ReleaseDate, DateOfBirth, and Title as well. */
+SELECT ReleaseDate, DateOfBirth, Title FROM Director JOIN Movie ON MId = DId WHERE (strftime('%d', DateOfBirth) = strftime('%d', ReleaseDate) AND strftime('%m', DateOfBirth) = strftime('%m', ReleaseDate));
+
+/* 4. Find the movie (Title, Budget) directed by Martin Scorsese that had the largest budget. */
+SELECT Title, MAX(Budget) FROM Movie JOIN Director ON MId = DId WHERE Name = 'Martin Scorsese';
+
+/* 5. For each director (DId, Name) that directed a movie, find and print the average budget 
+      of the movies s/he directed. (Make sure to print the average budget.) */
+SELECT DId, Name, AVG(Budget) FROM Movie NATURAL JOIN Directed NATURAL JOIN Director GROUP BY DId;
+
+/* 6. For each movie (MId, Title), find and print the number of directors. */
+SELECT COUNT(DId) FROM Movie NATURAL JOIN Directed NATURAL JOIN Director GROUP BY MId;
+
+/* 7. Find the movies (MId, Title) that have exactly one director. (Do not print the number of 
+      directors.) 
+SELECT MId, Title FROM Movie NATURAL JOIN Directed NATURAL JOIN Director GROUP BY MId HAVING COUNT(DId) = 1; 
+
+/* 8. Find the directors (DId, Name) that have directed movies by themselves. */
+SELECT DId, Name FROM Movie NATURAL JOIN Directed NATURAL JOIN Director GROUP BY MId HAVING COUNT(DId) = 1;
+
+/* 9. [hard] Find the directors (DId, Name) that have directed movies, but never by 
+      themselves. */
+SELECT DId, Name FROM Movie NATURAL JOIN Directed NATURAL JOIN Director EXCEPT SELECT DId, Name FROM Movie NATURAL JOIN Directed NATURAL JOIN Director
+WHERE DId IN (SELECT DId FROM Movie NATURAL JOIN Directed NATURAL JOIN Director GROUP BY MId HAVING COUNT(DId) = 1);
+
+/* 10. [hard] Find the directors (DId, Name) that have never directed a movie with someone 
+      else. Include those directors that have never directed a movie. */
+Select Name, Director.DId from Movie JOIN Directed ON Movie.MId = Directed.MId JOIN Director on Director.DId = Directed.DId where Director.DId IN(Select Director.DId from Movie JOIN Directed ON Movie.MId
+ = Directed.MId JOIN Director on Director.DId = Directed.DId group by Movie.MId having(count(Director.DId) = 1)) group by Director.DId;
+
+
+
