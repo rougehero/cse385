@@ -1,0 +1,59 @@
+
+1. The Student_Number must be unique in the student section and the grade report section. 
+The course_number column must be unique in the course section, prerequisite section, and Section section. 
+The section_identifier column must be unique in the Section section and the Grade_Report section.
+
+2. In the TRIP section the Ssn is the foreign key. In the Expense section the trip id is the foreign key. 
+
+3. a) In the Option section the foreign key is Serial no. I'm assuming that the price is the price of the option and not the car. 
+ In the Sale section the foreign key is Serial no. In the SalesPeron section the foreign key is SalesPerson id.
+
+b) 
++----------+------+--------------+-------+
+|Serial no |Model | Manufacturer | Price |
++----------+------+--------------+-------+
+| 0891     | 1200 | Ford         | 18000 |
++----------+------+--------------+-------+
+| 4592     | 1800 | Ford         | 22000 |
++----------+------+--------------+-------+
+| 3314     | 0550 | Honda        | 13500 |
++----------+------+--------------+-------+
+
+
++----------+------------+------+
+|Serial no |Option_name |Price |
++----------+------------+------+
+| 0891     |stereo plus | 800  |
++----------+------------+------+
+| 0855     |super wheels| 1500 |
++----------+------------+------+
+| 0788     |outer finish| 350  |
++----------+------------+------+
+
++--------------+---------+----------+----------+
+|Salesperson id|Serial no| Date     |Sale_price|
++--------------+---------+----------+----------+
+| 0031         | 0891    | 1/24/2015| 1720     |
++--------------+---------+----------+----------+
+| 0022         | 4592    | 2/02/2015| 2188     |
++--------------+---------+----------+----------+
+|0005          | 3314    | 1/28/2015| 1248     |
++--------------+---------+----------+----------+
+
++--------------+------------+--------------+
+|Salesperson id| Name       | Phone        |
++--------------+------------+--------------+
+|  0031        | Billy Smith| 123-456-7890 |
++--------------+------------+--------------+
+|  0022        | Mike Hughs | 234-567-8901 |
++--------------+------------+--------------+
+|  0005        | Abe Johnson| 345-678-9012 |
++--------------+------------+--------------+
+
+c) An example of a relation that violates a referential intergrity is to input a string into the sale_price column.
+ An example of an insertion that does not violate the referntial integrity is an int in the salesperson id column.
+
+
+
+
+
