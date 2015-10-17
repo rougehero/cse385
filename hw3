@@ -1,0 +1,64 @@
+
+CREATE TABLE Students (IdNumber INT NOT NULL, Id VARCHAR(50) NOT NULL, Name VARCHAR(50) NOT NULL, Address VARCHAR(50) DEFAULT NULL, DoB DATE, Phone PHONE, PRIMARY KEY(School_Id));
+
+INSERT INTO Students VALUES(1, 'alice', 'Alice Smith', '123 BlueBird Lane', '1992-10-10', '123-456-7890');
+(I had to write out every statment like this one. It seems repetetive and pointless to write out my code again, but this is how I added my information into my table.)
+
+
+SELECT Name FROM Students WHERE IdNumber = 5;
+Dave Pitt
+
+SELECT Name FROM Students WHERE Address = '67 Cardinal St';
+Carol Smith
+Dave Pitt
+Jacob Jones
+SELECT * FROM Students WHERE Id = 'alice';
+1:alice:Alice Smith:123 Bluebird Lane:1992-10-10:123-456-7890
+
+SELECT Address FROM Students WHERE DoB = '1996-02-29' AND Phone = '781-123-4567';
+67 Cardinal St
+
+SELECT DoB FROM Students WHERE Id = 'gina' OR Id = 'irene';
+1984-12-17
+1992-01-02
+
+SELECT IdNumber FROM Students WHERE DoB = '1992-01-02' OR DoB = '1993-03-03';
+4
+6
+16
+
+SELECT Name FROM Students WHERE Phone = '';
+Eve El
+
+SELECT Name, IdNumber FROM Students WHERE strftime('%m', DoB) = '01';
+Eve El		6
+Irene Doe	16
+
+SELECT Name, IdNumber FROM Students WHERE strftime('%m', DoB) = strftime('%d', DoB);
+Alice Smith	1
+Bob Doe		3
+Carol Smith	4
+Dave Pitt	5
+
+PRAGMA case_sensitive_like=ON;
+SELECT Name, IdNumber FROM Students WHERE Name LIKE '%i%';
+Alice Smith	1
+Carol Smith	4
+Dave Pitt	5
+Frank Smith	7
+Gina Gina	10
+
+PRAGMA case_sensitive_like=ON;
+SELECT Name, IdNumber FROM Students WHERE Name LIKE '%A%';
+Alice Smith	1
+
+SELECT Name, DoB FROM Students ORDER BY date(DoB) DESC Limit 12;
+Jacob Jones 	1996-02-29
+Bob Doe		1994-08-08
+Carol Smith	1993-03-03
+Dave Pitt	1992-12-12
+Alice Smith	1992-10-10
+Eve El		1992-01-02
+Irene Doe	1992-02-02
+Harry Potter	1991-12-24
+Frank Smith	1991-02-03
